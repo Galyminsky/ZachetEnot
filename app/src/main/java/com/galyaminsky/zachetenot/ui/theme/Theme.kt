@@ -27,7 +27,8 @@ private val LightColorScheme = lightColorScheme(
 fun ZachetEnotTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = LightColorScheme,
-        typography = Typography,
+        typography = AppTypography,
+        shapes = AppShapes,
         content = content
     )
 }

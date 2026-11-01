@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">ZachetEnot</string>
+    <string name="topic_status_available">Доступна</string>
+    <string name="topic_status_passed">Пройдена</string>
+    <string name="topic_status_locked">Закрыта</string>
 </resources>

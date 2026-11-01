@@ -22,3 +22,11 @@ val Disabled = Color(0xFFECEEF4)
 val TextPrimary = Color(0xFF22243D)
 // Источник: роль в Figma — Вторичный текст.
 val TextSecondary = Color(0xFF74788F)
+// Источник: UI Kit — текст недоступного.
+val TextDisabled = Color(0xFF989DAF)
+// Источник: UI Kit — фон успеха.
+val SuccessContainer = Color(0xFFE5F4ED)
+// Источник: UI Kit — подложка статуса «Доступна».
+val SelectedStrong = Color(0xFFE1DEFF)
+// Источник: UI Kit — дорожка выключенного переключателя.
+val SwitchTrackOff = Color(0xFFD9DDE8)

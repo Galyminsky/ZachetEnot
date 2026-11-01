@@ -49,19 +49,19 @@
                           "id":  "q_form_02",
                           "topicId":  "topic_unstressed_vowels",
                           "ruleId":  "rule_change_form",
-                          "text":  "Вставь пропущенную букву: л_са",
+                          "text":  "Вставь пропущенную букву: в_сна",
                           "options":  [
                                           {
                                               "id":  "q_form_02_option_1",
-                                              "text":  "е"
+                                              "text":  "и"
                                           },
                                           {
                                               "id":  "q_form_02_option_2",
-                                              "text":  "я"
+                                              "text":  "а"
                                           },
                                           {
                                               "id":  "q_form_02_option_3",
-                                              "text":  "и"
+                                              "text":  "е"
                                           }
                                       ],
                           "correctOptionId":  "q_form_02_option_3"
@@ -112,7 +112,7 @@
                           "id":  "q_form_05",
                           "topicId":  "topic_unstressed_vowels",
                           "ruleId":  "rule_change_form",
-                          "text":  "Вставь пропущенную букву: н_га",
+                          "text":  "Вставь пропущенную букву: с_стра",
                           "options":  [
                                           {
                                               "id":  "q_form_05_option_1",
@@ -120,11 +120,11 @@
                                           },
                                           {
                                               "id":  "q_form_05_option_2",
-                                              "text":  "о"
+                                              "text":  "е"
                                           },
                                           {
                                               "id":  "q_form_05_option_3",
-                                              "text":  "у"
+                                              "text":  "и"
                                           }
                                       ],
                           "correctOptionId":  "q_form_05_option_2"
@@ -154,7 +154,7 @@
                           "id":  "q_form_07",
                           "topicId":  "topic_unstressed_vowels",
                           "ruleId":  "rule_change_form",
-                          "text":  "Вставь пропущенную букву: ст_на",
+                          "text":  "Вставь пропущенную букву: гн_здо",
                           "options":  [
                                           {
                                               "id":  "q_form_07_option_1",
@@ -301,19 +301,19 @@
                           "id":  "q_related_06",
                           "topicId":  "topic_unstressed_vowels",
                           "ruleId":  "rule_related_word",
-                          "text":  "Вставь пропущенную букву: гр_бной",
+                          "text":  "Вставь пропущенную букву: в_дяной",
                           "options":  [
                                           {
                                               "id":  "q_related_06_option_1",
-                                              "text":  "и"
+                                              "text":  "о"
                                           },
                                           {
                                               "id":  "q_related_06_option_2",
-                                              "text":  "е"
+                                              "text":  "а"
                                           },
                                           {
                                               "id":  "q_related_06_option_3",
-                                              "text":  "ы"
+                                              "text":  "у"
                                           }
                                       ],
                           "correctOptionId":  "q_related_06_option_1"
@@ -322,19 +322,19 @@
                           "id":  "q_related_07",
                           "topicId":  "topic_unstressed_vowels",
                           "ruleId":  "rule_related_word",
-                          "text":  "Вставь пропущенную букву: с_довый",
+                          "text":  "Вставь пропущенную букву: д_мовой",
                           "options":  [
                                           {
                                               "id":  "q_related_07_option_1",
-                                              "text":  "о"
-                                          },
-                                          {
-                                              "id":  "q_related_07_option_2",
                                               "text":  "а"
                                           },
                                           {
+                                              "id":  "q_related_07_option_2",
+                                              "text":  "о"
+                                          },
+                                          {
                                               "id":  "q_related_07_option_3",
-                                              "text":  "я"
+                                              "text":  "у"
                                           }
                                       ],
                           "correctOptionId":  "q_related_07_option_2"
