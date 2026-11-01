@@ -13,7 +13,7 @@ object ContentParser {
 
     fun parse(json: String): ContentBundle {
         val dto = jsonFormat.decodeFromString<ContentBundleDto>(json)
-        val topics = dto.topics.map { Topic(it.id, it.title, it.order) }
+        val topics = dto.topics.map { Topic(it.id, it.title, it.order, description = it.description) }
         val rules = dto.rules.map { Rule(it.id, it.title, it.explanation) }
         val questions = dto.questions.map { question ->
             Question(
@@ -47,7 +47,7 @@ object ContentParser {
     )
 
     @Serializable
-    private data class TopicDto(val id: String, val title: String, val order: Int)
+    private data class TopicDto(val id: String, val title: String, val order: Int, val description: String = "")
 
     @Serializable
     private data class RuleDto(val id: String, val title: String, val explanation: String)

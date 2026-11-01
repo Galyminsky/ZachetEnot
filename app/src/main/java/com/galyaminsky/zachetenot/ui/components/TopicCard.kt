@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.weight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -32,6 +31,7 @@ import com.galyaminsky.zachetenot.ui.theme.Dimens
 import com.galyaminsky.zachetenot.ui.theme.Primary
 import com.galyaminsky.zachetenot.ui.theme.Selected
 import com.galyaminsky.zachetenot.ui.theme.Success
+import com.galyaminsky.zachetenot.ui.theme.SuccessContainer
 import com.galyaminsky.zachetenot.ui.theme.Surface
 import com.galyaminsky.zachetenot.ui.theme.TextDisabled
 import com.galyaminsky.zachetenot.ui.theme.TextPrimary
@@ -51,10 +51,14 @@ fun TopicCard(
     val borderWidth = if (status == TopicStatus.AVAILABLE) Dimens.BorderWidthSelected else Dimens.BorderWidth
     val badgeColor = when (status) {
         TopicStatus.AVAILABLE -> Primary
-        TopicStatus.PASSED -> Success
+        TopicStatus.PASSED -> SuccessContainer
         TopicStatus.LOCKED -> Disabled
     }
-    val numberColor = if (status == TopicStatus.LOCKED) TextDisabled else Surface
+    val numberColor = when (status) {
+        TopicStatus.PASSED -> Success
+        TopicStatus.LOCKED -> TextDisabled
+        TopicStatus.AVAILABLE -> Surface
+    }
     val titleColor = if (status == TopicStatus.LOCKED) TextSecondary else TextPrimary
 
     Row(
@@ -89,7 +93,7 @@ fun TopicCard(
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodySmall.copy(fontSize = 13.sp, lineHeight = 18.sp),
-                color = if (status == TopicStatus.LOCKED) TextDisabled else TextSecondary
+                color = TextSecondary
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),

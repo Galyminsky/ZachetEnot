@@ -30,3 +30,5 @@ val SuccessContainer = Color(0xFFE5F4ED)
 val SelectedStrong = Color(0xFFE1DEFF)
 // Источник: UI Kit — дорожка выключенного переключателя.
 val SwitchTrackOff = Color(0xFFD9DDE8)
+// Макет: приглушённый текст на фоне Primary.
+val OnPrimaryMuted = Color(0xFFDEDCFF)
