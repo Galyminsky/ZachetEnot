@@ -12,4 +12,6 @@ object Dimens {
     val Space48 = 48.dp
     val ScreenHorizontalPadding = 24.dp
     val MinTouchTarget = 48.dp
+    val BorderWidth = 1.dp
+    val BorderWidthSelected = 2.dp
 }

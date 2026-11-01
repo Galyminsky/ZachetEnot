@@ -20,7 +20,13 @@ private val DefaultTypography = Typography()
 private fun TextStyle.withInter() = copy(fontFamily = InterFamily)
 
 val AppTypography = Typography(
-    displayLarge = DefaultTypography.displayLarge.withInter(),
+    displayLarge = TextStyle(
+        fontFamily = InterFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 46.sp,
+        lineHeight = 48.sp,
+        letterSpacing = (-2).sp
+    ),
     displayMedium = DefaultTypography.displayMedium.withInter(),
     displaySmall = DefaultTypography.displaySmall.withInter(),
     headlineLarge = TextStyle(
@@ -46,7 +52,13 @@ val AppTypography = Typography(
         letterSpacing = 0.sp
     ),
     titleMedium = DefaultTypography.titleMedium.withInter(),
-    titleSmall = DefaultTypography.titleSmall.withInter(),
+    titleSmall = TextStyle(
+        fontFamily = InterFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        lineHeight = 17.sp,
+        letterSpacing = 0.sp
+    ),
     bodyLarge = TextStyle(
         fontFamily = InterFamily,
         fontWeight = FontWeight.Normal,
@@ -55,7 +67,13 @@ val AppTypography = Typography(
         letterSpacing = 0.sp
     ),
     bodyMedium = DefaultTypography.bodyMedium.withInter(),
-    bodySmall = DefaultTypography.bodySmall.withInter(),
+    bodySmall = TextStyle(
+        fontFamily = InterFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 15.sp,
+        letterSpacing = 0.sp
+    ),
     labelLarge = TextStyle(
         fontFamily = InterFamily,
         fontWeight = FontWeight.SemiBold,

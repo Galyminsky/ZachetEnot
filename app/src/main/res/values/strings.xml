@@ -3,4 +3,8 @@
     <string name="topic_status_available">Доступна</string>
     <string name="topic_status_passed">Пройдена</string>
     <string name="topic_status_locked">Закрыта</string>
+    <string name="grade_label">класс</string>
+    <string name="nav_topics">Темы</string>
+    <string name="nav_progress">Прогресс</string>
+    <string name="nav_settings">Настройки</string>
 </resources>
