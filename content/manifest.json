@@ -1,0 +1,14 @@
+{
+  "version": "2026.11.03",
+  "totalQuestions": 138,
+  "topicCoverage": {
+    "topic_speech_text": 26,
+    "topic_sentence": 20,
+    "topic_word_structure": 28,
+    "topic_root_spelling": 24,
+    "topic_noun": 20,
+    "topic_adjective": 20
+  },
+  "androidPath": "android/russian_grade3.json",
+  "reviewRequired": true
+}

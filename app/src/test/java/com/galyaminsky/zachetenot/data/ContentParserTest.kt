@@ -2,6 +2,7 @@
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
 
@@ -45,15 +46,49 @@ class ContentParserTest {
     }
 
     @Test
-    fun `parses the temporary grade three content`() {
+    fun `parses the current grade three content`() {
         val file = File("src/main/assets/content/russian_grade3.json")
         val result = ContentParser.parse(file.readText())
 
         assertEquals(6, result.topics.size)
-        assertEquals(3, result.rules.size)
-        assertEquals(144, result.questions.size)
+        assertEquals(12, result.rules.size)
+        assertEquals(138, result.questions.size)
+
+        assertEquals(result.topics.size, result.topics.map { it.id }.distinct().size)
+        assertEquals(result.rules.size, result.rules.map { it.id }.distinct().size)
+        assertEquals(result.questions.size, result.questions.map { it.id }.distinct().size)
+
+        val topicIds = result.topics.map { it.id }.toSet()
+        val ruleIds = result.rules.map { it.id }.toSet()
+        result.questions.forEach { question ->
+            assertTrue(question.topicId in topicIds)
+            assertTrue(question.ruleId in ruleIds)
+            assertEquals(
+                question.options.size,
+                question.options.map { it.id }.distinct().size
+            )
+            assertEquals(
+                1,
+                question.options.count { it.id == question.correctOptionId }
+            )
+        }
+
+        val expectedQuestionsPerTopic = mapOf(
+            "topic_speech_text" to 26,
+            "topic_sentence" to 20,
+            "topic_word_structure" to 28,
+            "topic_root_spelling" to 24,
+            "topic_noun" to 20,
+            "topic_adjective" to 20
+        )
+        assertEquals(
+            expectedQuestionsPerTopic,
+            result.topics.associate { topic ->
+                topic.id to result.questions.count { it.topicId == topic.id }
+            }
+        )
+
         result.topics.forEach { topic ->
-            assertEquals(24, result.questions.count { it.topicId == topic.id })
             assertEquals(true, topic.description.isNotEmpty())
         }
     }
