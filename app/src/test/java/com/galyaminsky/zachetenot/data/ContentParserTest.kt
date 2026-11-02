@@ -49,11 +49,12 @@ class ContentParserTest {
         val file = File("src/main/assets/content/russian_grade3.json")
         val result = ContentParser.parse(file.readText())
 
-        assertEquals(1, result.topics.size)
+        assertEquals(6, result.topics.size)
         assertEquals(3, result.rules.size)
-        assertEquals(24, result.questions.size)
-        result.rules.forEach { rule ->
-            assertEquals(true, result.questions.count { it.ruleId == rule.id } >= 8)
+        assertEquals(144, result.questions.size)
+        result.topics.forEach { topic ->
+            assertEquals(24, result.questions.count { it.topicId == topic.id })
+            assertEquals(true, topic.description.isNotEmpty())
         }
     }
 }

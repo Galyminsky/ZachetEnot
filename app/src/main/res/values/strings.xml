@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">ZachetEnot</string>
+    <string name="topic_status_available">Доступна</string>
+    <string name="topic_status_passed">Пройдена</string>
+    <string name="topic_status_locked">Закрыта</string>
+    <string name="grade_label">класс</string>
+    <string name="nav_topics">Темы</string>
+    <string name="nav_progress">Прогресс</string>
+    <string name="nav_settings">Настройки</string>
+    <string name="app_wordmark">шаг</string>
+    <string name="back">Назад</string>
+    <string name="count_of_total">%1$d из %2$d</string>
+    <string name="progress_title">Твой прогресс</string>
+    <string name="progress_topics_done">тем освоено</string>
+    <string name="percent_format">%1$d%%</string>
+    <string name="test_exit">Выйти</string>
+    <string name="test_time_left">Осталось</string>
+    <string name="question_n_of">Вопрос %1$d из %2$d</string>
+    <string name="answered_n_of">Отвечено %1$d из %2$d</string>
+    <string name="answer_locked_title">Ответ зафиксирован</string>
+    <string name="answer_locked_text">Изменить его нельзя. Результат узнаешь после завершения теста.</string>
+    <string name="matching_choose">Выбрать</string>
 </resources>
