@@ -1,0 +1,532 @@
+﻿{
+    "topics":  [
+                   {
+                       "id":  "topic_unstressed_vowels",
+                       "title":  "Безударные гласные в корне слова",
+                       "order":  1
+                   }
+               ],
+    "rules":  [
+                  {
+                      "id":  "rule_change_form",
+                      "title":  "Измени форму слова",
+                      "explanation":  "Измени число или форму слова так, чтобы сомнительная гласная в корне оказалась под ударением."
+                  },
+                  {
+                      "id":  "rule_related_word",
+                      "title":  "Подбери родственное слово",
+                      "explanation":  "Найди слово с тем же корнем, в котором сомнительная гласная слышится ясно под ударением."
+                  },
+                  {
+                      "id":  "rule_dictionary_word",
+                      "title":  "Проверь по словарю",
+                      "explanation":  "Если проверочное слово подобрать нельзя, написание слова нужно запомнить или уточнить в словаре."
+                  }
+              ],
+    "questions":  [
+                      {
+                          "id":  "q_form_01",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_change_form",
+                          "text":  "Вставь пропущенную букву: в_да",
+                          "options":  [
+                                          {
+                                              "id":  "q_form_01_option_1",
+                                              "text":  "а"
+                                          },
+                                          {
+                                              "id":  "q_form_01_option_2",
+                                              "text":  "о"
+                                          },
+                                          {
+                                              "id":  "q_form_01_option_3",
+                                              "text":  "у"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_form_01_option_2"
+                      },
+                      {
+                          "id":  "q_form_02",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_change_form",
+                          "text":  "Вставь пропущенную букву: л_са",
+                          "options":  [
+                                          {
+                                              "id":  "q_form_02_option_1",
+                                              "text":  "е"
+                                          },
+                                          {
+                                              "id":  "q_form_02_option_2",
+                                              "text":  "я"
+                                          },
+                                          {
+                                              "id":  "q_form_02_option_3",
+                                              "text":  "и"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_form_02_option_3"
+                      },
+                      {
+                          "id":  "q_form_03",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_change_form",
+                          "text":  "Вставь пропущенную букву: г_ра",
+                          "options":  [
+                                          {
+                                              "id":  "q_form_03_option_1",
+                                              "text":  "о"
+                                          },
+                                          {
+                                              "id":  "q_form_03_option_2",
+                                              "text":  "а"
+                                          },
+                                          {
+                                              "id":  "q_form_03_option_3",
+                                              "text":  "у"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_form_03_option_1"
+                      },
+                      {
+                          "id":  "q_form_04",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_change_form",
+                          "text":  "Вставь пропущенную букву: р_ка",
+                          "options":  [
+                                          {
+                                              "id":  "q_form_04_option_1",
+                                              "text":  "ы"
+                                          },
+                                          {
+                                              "id":  "q_form_04_option_2",
+                                              "text":  "и"
+                                          },
+                                          {
+                                              "id":  "q_form_04_option_3",
+                                              "text":  "е"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_form_04_option_3"
+                      },
+                      {
+                          "id":  "q_form_05",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_change_form",
+                          "text":  "Вставь пропущенную букву: н_га",
+                          "options":  [
+                                          {
+                                              "id":  "q_form_05_option_1",
+                                              "text":  "а"
+                                          },
+                                          {
+                                              "id":  "q_form_05_option_2",
+                                              "text":  "о"
+                                          },
+                                          {
+                                              "id":  "q_form_05_option_3",
+                                              "text":  "у"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_form_05_option_2"
+                      },
+                      {
+                          "id":  "q_form_06",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_change_form",
+                          "text":  "Вставь пропущенную букву: к_за",
+                          "options":  [
+                                          {
+                                              "id":  "q_form_06_option_1",
+                                              "text":  "о"
+                                          },
+                                          {
+                                              "id":  "q_form_06_option_2",
+                                              "text":  "а"
+                                          },
+                                          {
+                                              "id":  "q_form_06_option_3",
+                                              "text":  "у"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_form_06_option_1"
+                      },
+                      {
+                          "id":  "q_form_07",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_change_form",
+                          "text":  "Вставь пропущенную букву: ст_на",
+                          "options":  [
+                                          {
+                                              "id":  "q_form_07_option_1",
+                                              "text":  "а"
+                                          },
+                                          {
+                                              "id":  "q_form_07_option_2",
+                                              "text":  "и"
+                                          },
+                                          {
+                                              "id":  "q_form_07_option_3",
+                                              "text":  "е"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_form_07_option_3"
+                      },
+                      {
+                          "id":  "q_form_08",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_change_form",
+                          "text":  "Вставь пропущенную букву: тр_ва",
+                          "options":  [
+                                          {
+                                              "id":  "q_form_08_option_1",
+                                              "text":  "о"
+                                          },
+                                          {
+                                              "id":  "q_form_08_option_2",
+                                              "text":  "а"
+                                          },
+                                          {
+                                              "id":  "q_form_08_option_3",
+                                              "text":  "и"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_form_08_option_2"
+                      },
+                      {
+                          "id":  "q_related_01",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_related_word",
+                          "text":  "Вставь пропущенную букву: сн_жок",
+                          "options":  [
+                                          {
+                                              "id":  "q_related_01_option_1",
+                                              "text":  "и"
+                                          },
+                                          {
+                                              "id":  "q_related_01_option_2",
+                                              "text":  "е"
+                                          },
+                                          {
+                                              "id":  "q_related_01_option_3",
+                                              "text":  "я"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_related_01_option_2"
+                      },
+                      {
+                          "id":  "q_related_02",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_related_word",
+                          "text":  "Вставь пропущенную букву: л_сной",
+                          "options":  [
+                                          {
+                                              "id":  "q_related_02_option_1",
+                                              "text":  "е"
+                                          },
+                                          {
+                                              "id":  "q_related_02_option_2",
+                                              "text":  "и"
+                                          },
+                                          {
+                                              "id":  "q_related_02_option_3",
+                                              "text":  "я"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_related_02_option_1"
+                      },
+                      {
+                          "id":  "q_related_03",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_related_word",
+                          "text":  "Вставь пропущенную букву: м_рской",
+                          "options":  [
+                                          {
+                                              "id":  "q_related_03_option_1",
+                                              "text":  "а"
+                                          },
+                                          {
+                                              "id":  "q_related_03_option_2",
+                                              "text":  "у"
+                                          },
+                                          {
+                                              "id":  "q_related_03_option_3",
+                                              "text":  "о"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_related_03_option_3"
+                      },
+                      {
+                          "id":  "q_related_04",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_related_word",
+                          "text":  "Вставь пропущенную букву: цв_ток",
+                          "options":  [
+                                          {
+                                              "id":  "q_related_04_option_1",
+                                              "text":  "и"
+                                          },
+                                          {
+                                              "id":  "q_related_04_option_2",
+                                              "text":  "е"
+                                          },
+                                          {
+                                              "id":  "q_related_04_option_3",
+                                              "text":  "я"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_related_04_option_2"
+                      },
+                      {
+                          "id":  "q_related_05",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_related_word",
+                          "text":  "Вставь пропущенную букву: з_лотой",
+                          "options":  [
+                                          {
+                                              "id":  "q_related_05_option_1",
+                                              "text":  "а"
+                                          },
+                                          {
+                                              "id":  "q_related_05_option_2",
+                                              "text":  "о"
+                                          },
+                                          {
+                                              "id":  "q_related_05_option_3",
+                                              "text":  "у"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_related_05_option_2"
+                      },
+                      {
+                          "id":  "q_related_06",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_related_word",
+                          "text":  "Вставь пропущенную букву: гр_бной",
+                          "options":  [
+                                          {
+                                              "id":  "q_related_06_option_1",
+                                              "text":  "и"
+                                          },
+                                          {
+                                              "id":  "q_related_06_option_2",
+                                              "text":  "е"
+                                          },
+                                          {
+                                              "id":  "q_related_06_option_3",
+                                              "text":  "ы"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_related_06_option_1"
+                      },
+                      {
+                          "id":  "q_related_07",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_related_word",
+                          "text":  "Вставь пропущенную букву: с_довый",
+                          "options":  [
+                                          {
+                                              "id":  "q_related_07_option_1",
+                                              "text":  "о"
+                                          },
+                                          {
+                                              "id":  "q_related_07_option_2",
+                                              "text":  "а"
+                                          },
+                                          {
+                                              "id":  "q_related_07_option_3",
+                                              "text":  "я"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_related_07_option_2"
+                      },
+                      {
+                          "id":  "q_related_08",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_related_word",
+                          "text":  "Вставь пропущенную букву: к_рмушка",
+                          "options":  [
+                                          {
+                                              "id":  "q_related_08_option_1",
+                                              "text":  "а"
+                                          },
+                                          {
+                                              "id":  "q_related_08_option_2",
+                                              "text":  "у"
+                                          },
+                                          {
+                                              "id":  "q_related_08_option_3",
+                                              "text":  "о"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_related_08_option_3"
+                      },
+                      {
+                          "id":  "q_dictionary_01",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_dictionary_word",
+                          "text":  "Выбери слово, которое написано правильно.",
+                          "options":  [
+                                          {
+                                              "id":  "q_dictionary_01_option_1",
+                                              "text":  "карова"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_01_option_2",
+                                              "text":  "корова"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_01_option_3",
+                                              "text":  "курова"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_dictionary_01_option_2"
+                      },
+                      {
+                          "id":  "q_dictionary_02",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_dictionary_word",
+                          "text":  "Выбери слово, которое написано правильно.",
+                          "options":  [
+                                          {
+                                              "id":  "q_dictionary_02_option_1",
+                                              "text":  "сабака"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_02_option_2",
+                                              "text":  "собока"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_02_option_3",
+                                              "text":  "собака"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_dictionary_02_option_3"
+                      },
+                      {
+                          "id":  "q_dictionary_03",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_dictionary_word",
+                          "text":  "Выбери слово, которое написано правильно.",
+                          "options":  [
+                                          {
+                                              "id":  "q_dictionary_03_option_1",
+                                              "text":  "малако"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_03_option_2",
+                                              "text":  "молоко"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_03_option_3",
+                                              "text":  "молако"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_dictionary_03_option_2"
+                      },
+                      {
+                          "id":  "q_dictionary_04",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_dictionary_word",
+                          "text":  "Выбери слово, которое написано правильно.",
+                          "options":  [
+                                          {
+                                              "id":  "q_dictionary_04_option_1",
+                                              "text":  "варабей"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_04_option_2",
+                                              "text":  "варобей"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_04_option_3",
+                                              "text":  "воробей"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_dictionary_04_option_3"
+                      },
+                      {
+                          "id":  "q_dictionary_05",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_dictionary_word",
+                          "text":  "Выбери слово, которое написано правильно.",
+                          "options":  [
+                                          {
+                                              "id":  "q_dictionary_05_option_1",
+                                              "text":  "берёза"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_05_option_2",
+                                              "text":  "бирёза"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_05_option_3",
+                                              "text":  "бераза"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_dictionary_05_option_1"
+                      },
+                      {
+                          "id":  "q_dictionary_06",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_dictionary_word",
+                          "text":  "Выбери слово, которое написано правильно.",
+                          "options":  [
+                                          {
+                                              "id":  "q_dictionary_06_option_1",
+                                              "text":  "иблоко"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_06_option_2",
+                                              "text":  "яблако"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_06_option_3",
+                                              "text":  "яблоко"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_dictionary_06_option_3"
+                      },
+                      {
+                          "id":  "q_dictionary_07",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_dictionary_word",
+                          "text":  "Выбери слово, которое написано правильно.",
+                          "options":  [
+                                          {
+                                              "id":  "q_dictionary_07_option_1",
+                                              "text":  "магазен"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_07_option_2",
+                                              "text":  "магазин"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_07_option_3",
+                                              "text":  "могазин"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_dictionary_07_option_2"
+                      },
+                      {
+                          "id":  "q_dictionary_08",
+                          "topicId":  "topic_unstressed_vowels",
+                          "ruleId":  "rule_dictionary_word",
+                          "text":  "Выбери слово, которое написано правильно.",
+                          "options":  [
+                                          {
+                                              "id":  "q_dictionary_08_option_1",
+                                              "text":  "карондаш"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_08_option_2",
+                                              "text":  "корондаш"
+                                          },
+                                          {
+                                              "id":  "q_dictionary_08_option_3",
+                                              "text":  "карандаш"
+                                          }
+                                      ],
+                          "correctOptionId":  "q_dictionary_08_option_3"
+                      }
+                  ]
+}
