@@ -22,7 +22,8 @@ data class ResultUiState(
     val message: String,
     val reviewButton: String,
     val retryButton: String,
-    val listButton: String
+    val listButton: String,
+    val failedNote: String? = null
 )
 
 data class ReviewSuccessUi(val title: String, val text: String, val note: String)

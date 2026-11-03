@@ -1,4 +1,4 @@
-package com.galyaminsky.zachetenot
+﻿package com.galyaminsky.zachetenot
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,9 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
@@ -57,8 +54,17 @@ import com.galyaminsky.zachetenot.ui.screens.test.AnswerUi
 import com.galyaminsky.zachetenot.ui.screens.test.AnswerPhase
 import com.galyaminsky.zachetenot.ui.screens.result.ResultScreen
 import com.galyaminsky.zachetenot.ui.screens.result.ResultUiState
+import com.galyaminsky.zachetenot.ui.screens.result.ReviewScreen
+import com.galyaminsky.zachetenot.ui.screens.result.ReviewUiState
+import com.galyaminsky.zachetenot.ui.components.MistakeUi
 import com.galyaminsky.zachetenot.ui.components.AppNavigationBar
 import com.galyaminsky.zachetenot.ui.components.NavItem
+import com.galyaminsky.zachetenot.ui.components.StateDialog
+import com.galyaminsky.zachetenot.ui.screens.status.StatusScreen
+import com.galyaminsky.zachetenot.ui.screens.status.StatusKind
+import com.galyaminsky.zachetenot.ui.theme.InfoContainer
+import com.galyaminsky.zachetenot.ui.theme.AttentionContainer
+import com.galyaminsky.zachetenot.ui.theme.DangerContainer
 import com.galyaminsky.zachetenot.ui.theme.ZachetEnotTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -78,6 +84,10 @@ class MainActivity : ComponentActivity() {
                 var showPrep by rememberSaveable { mutableStateOf(false) }
                 var showTest by rememberSaveable { mutableStateOf(false) }
                 var showResult by rememberSaveable { mutableStateOf(false) }
+                var showReview by rememberSaveable { mutableStateOf(false) }
+                var showNoContent by rememberSaveable { mutableStateOf(false) }
+                var showUnavailable by rememberSaveable { mutableStateOf(false) }
+                var reviewMistakes by remember { mutableStateOf<List<MistakeUi>>(emptyList()) }
                 var showExitConfirmation by remember { mutableStateOf(false) }
                 var showResetConfirmation by remember { mutableStateOf(false) }
                 var showTimeUp by remember { mutableStateOf(false) }
@@ -104,8 +114,8 @@ class MainActivity : ComponentActivity() {
                         if (timer!!.isExpired()) {
                             result = session?.finish()
                             if (result?.passed == true) selectedTopicId?.let { id -> coroutineScope.launch { progressRepository.markPassed(id) } }
-                            showTest = false
-                            showResult = true
+                            warningMinute = null
+                            showExitConfirmation = false
                             showTimeUp = true
                             break
                         }
@@ -114,7 +124,25 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    if (showResult && result != null) {
+                    if (showReview && result != null) {
+                        val currentResult = result!!
+                        ReviewScreen(
+                            state = ReviewUiState(
+                                contextLine = stringResource(R.string.figma_grade_subject, stringResource(R.string.subject_grade_chip), stringResource(R.string.subject_russian)),
+                                title = stringResource(R.string.variant_review_title),
+                                subtitle = stringResource(R.string.variant_review_subtitle),
+                                statsLine = stringResource(if (reviewMistakes.isEmpty()) R.string.variant_review_perfect_note else R.string.variant_review_score, currentResult.correctCount, currentResult.totalCount),
+                                timeLine = stringResource(R.string.figma_time_format, ((TestConfig.TIME_LIMIT_MINUTES * 60_000L - remainingMs) / 60_000L).toInt(), (((TestConfig.TIME_LIMIT_MINUTES * 60_000L - remainingMs) / 1_000L) % 60).toInt()),
+                                mistakes = reviewMistakes,
+                                footerMessage = null,
+                                success = null,
+                                buttonText = stringResource(R.string.figma_result_topics)
+                            ),
+                            onBack = { showReview = false; showResult = true },
+                            onList = { showReview = false; showTopics = true },
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                    } else if (showResult && result != null) {
                         val currentResult = result!!
                         ResultScreen(
                             state = ResultUiState(
@@ -137,13 +165,16 @@ class MainActivity : ComponentActivity() {
                                 message = stringResource(if (currentResult.passed) R.string.figma_result_passed_message else R.string.figma_result_failed_message),
                                 reviewButton = stringResource(R.string.figma_result_review),
                                 retryButton = stringResource(R.string.figma_result_retry),
-                                listButton = stringResource(R.string.figma_result_topics)
+                                listButton = stringResource(R.string.figma_result_topics),
+                                failedNote = stringResource(R.string.variant_failed_note, currentResult.correctCount, currentResult.totalCount)
                             ),
-                            onReview = {},
+                            onReview = { showResult = false; showReview = true },
                             onRetry = { showResult = false; showPrep = true },
                             onList = { showResult = false; showTopics = true },
                             modifier = Modifier.padding(innerPadding),
-                            reviewAvailable = false
+                            reviewAvailable = reviewMistakes.size == currentResult.incorrectCount,
+                            onHome = { showResult = false; showHome = true },
+                            onProgress = { showResult = false; showProgress = true }
                         )
                     } else if (showTest && session != null) {
                         val currentSession = session!!
@@ -168,7 +199,21 @@ class MainActivity : ComponentActivity() {
                             onExit = { showExitConfirmation = true },
                             onAction = {
                                 if (answerPhase == AnswerPhase.Filled) {
-                                    currentSession.submitAnswer(question.options[selectedOptionIndex!!].id)
+                                    val chosen = question.options[selectedOptionIndex!!]
+                                    val correct = currentSession.submitAnswer(chosen.id)
+                                    if (!correct) {
+                                        val rule = content?.ruleOf(question.ruleId)
+                                        if (rule != null) reviewMistakes = reviewMistakes + MistakeUi(
+                                            questionLabel = getString(R.string.variant_review_question, currentSession.currentIndex + 1),
+                                            questionText = question.text,
+                                            yourAnswerLabel = getString(R.string.variant_review_rule),
+                                            yourAnswer = chosen.text,
+                                            correctLabel = getString(R.string.variant_review_rule),
+                                            correctAnswer = question.options.first { it.id == question.correctOptionId }.text,
+                                            ruleTitle = rule.title,
+                                            ruleText = rule.explanation
+                                        )
+                                    }
                                     answerPhase = AnswerPhase.Locked
                                 } else if (answerPhase == AnswerPhase.Locked) {
                                     if (currentSession.isLastQuestion) {
@@ -186,6 +231,11 @@ class MainActivity : ComponentActivity() {
                             onTextChange = {}, onPartClick = {}, onPairClick = {},
                             modifier = Modifier.padding(innerPadding)
                         )
+                    } else if (showNoContent || showUnavailable) {
+                        StatusScreen(kind = if (showNoContent) StatusKind.NoContent else StatusKind.Unavailable, onBack = {
+                            if (showNoContent) { showNoContent = false; showTopics = true }
+                            else { showUnavailable = false; showSubjectSelection = true }
+                        }, modifier = Modifier.padding(innerPadding))
                     } else if (showPrep) {
                         PrepScreen(
                             state = PrepUiState(
@@ -202,6 +252,8 @@ class MainActivity : ComponentActivity() {
                                 caption = stringResource(R.string.figma_prep_repeat)
                             ),
                             onBack = { showPrep = false; showTopics = true },
+                            onHome = { showPrep = false; showHome = true },
+                            onProgress = { showPrep = false; showProgress = true },
                             onStart = {
                                 val bank = content?.questionsOf(selectedTopicId.orEmpty()).orEmpty()
                                 if (bank.size >= TestConfig.QUESTIONS_PER_TEST) {
@@ -210,8 +262,9 @@ class MainActivity : ComponentActivity() {
                                     remainingMs = TestConfig.TIME_LIMIT_MINUTES * 60_000L
                                     selectedOptionIndex = null
                                     answerPhase = AnswerPhase.Empty
+                                    reviewMistakes = emptyList()
                                     showPrep = false; showTest = true
-                                }
+                                } else { showPrep = false; showNoContent = true }
                             },
                             modifier = Modifier.padding(innerPadding)
                         )
@@ -261,9 +314,9 @@ class MainActivity : ComponentActivity() {
                         )
                         AppNavigationBar(
                             items = listOf(
-                                NavItem(stringResource(R.string.home_nav_home), R.drawable.ic_logo),
-                                NavItem(stringResource(R.string.home_nav_subjects), R.drawable.ic_layers),
-                                NavItem(stringResource(R.string.nav_progress), R.drawable.ic_chart)
+                                NavItem(stringResource(R.string.home_nav_home), R.drawable.ic_nav_home),
+                                NavItem(stringResource(R.string.home_nav_subjects), R.drawable.ic_nav_grid),
+                                NavItem(stringResource(R.string.nav_progress), R.drawable.ic_nav_progress)
                             ),
                             selectedIndex = 1,
                             onSelect = { index -> when (index) {
@@ -279,6 +332,8 @@ class MainActivity : ComponentActivity() {
                             onSubjectSelected = { selectedSubjectId = it },
                             onBack = { showSubjectSelection = false },
                             onContinue = { showSubjectSelection = false; showTopics = true },
+                            onProgress = { showSubjectSelection = false; showProgress = true },
+                            onUnavailable = { showSubjectSelection = false; showUnavailable = true },
                             modifier = Modifier.padding(innerPadding)
                         )
                     } else if (showHome) {
@@ -322,6 +377,7 @@ class MainActivity : ComponentActivity() {
                             onProgramClick = { showSubjectSelection = true },
                             onSubjectClick = {},
                             onProgressClick = { showProgress = true },
+                            onNextTopicClick = { showTopics = true },
                             modifier = Modifier.padding(innerPadding)
                         )
                     } else {
@@ -334,40 +390,19 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 if (showExitConfirmation) {
-                    AlertDialog(
-                        onDismissRequest = { showExitConfirmation = false },
-                        title = { Text(text = stringResource(R.string.figma_exit_title)) },
-                        text = { Text(text = stringResource(R.string.figma_exit_message)) },
-                        confirmButton = { TextButton(onClick = { showExitConfirmation = false; showTest = false; showTopics = true }) { Text(text = stringResource(R.string.figma_exit_confirm)) } },
-                        dismissButton = { TextButton(onClick = { showExitConfirmation = false }) { Text(text = stringResource(R.string.figma_cancel)) } }
-                    )
+                    StateDialog(illustration = R.drawable.ic_dialog_exit, badge = stringResource(R.string.state_confirm_badge), title = stringResource(R.string.figma_exit_title), message = stringResource(R.string.figma_exit_message), primaryLabel = stringResource(R.string.state_exit_continue), onPrimary = { showExitConfirmation = false }, onDismiss = { showExitConfirmation = false }, heroColor = InfoContainer, secondaryLabel = stringResource(R.string.figma_exit_confirm), onSecondary = { showExitConfirmation = false; showTest = false; showTopics = true })
                 }
                 if (showResetConfirmation) {
-                    AlertDialog(
-                        onDismissRequest = { showResetConfirmation = false },
-                        title = { Text(text = stringResource(R.string.figma_reset_title)) },
-                        text = { Text(text = stringResource(R.string.figma_reset_message)) },
-                        confirmButton = { TextButton(onClick = { coroutineScope.launch { progressRepository.reset() }; showResetConfirmation = false }) { Text(text = stringResource(R.string.figma_reset_confirm)) } },
-                        dismissButton = { TextButton(onClick = { showResetConfirmation = false }) { Text(text = stringResource(R.string.figma_cancel)) } }
-                    )
+                    StateDialog(illustration = R.drawable.ic_reset, badge = stringResource(R.string.state_reset_badge), title = stringResource(R.string.figma_reset_title), message = stringResource(R.string.figma_reset_message), primaryLabel = stringResource(R.string.figma_reset_confirm), onPrimary = { coroutineScope.launch { progressRepository.reset() }; showResetConfirmation = false }, onDismiss = { showResetConfirmation = false }, heroColor = DangerContainer, secondaryLabel = stringResource(R.string.figma_cancel), onSecondary = { showResetConfirmation = false }, secondaryFirst = true, destructive = true)
                 }
                 warningMinute?.let { minute ->
-                    AlertDialog(
-                        onDismissRequest = { warningMinute = null },
-                        title = { Text(text = stringResource(if (minute == 5) R.string.figma_warning_five else R.string.figma_warning_one)) },
-                        text = { Text(text = stringResource(if (minute == 5) R.string.figma_warning_five_text else R.string.figma_warning_one_text)) },
-                        confirmButton = { TextButton(onClick = { warningMinute = null }) { Text(text = stringResource(R.string.figma_understood)) } }
-                    )
+                    StateDialog(illustration = R.drawable.ic_dialog_timer, badge = stringResource(if (minute == 5) R.string.figma_warning_five else R.string.figma_warning_one), title = stringResource(if (minute == 5) R.string.state_timer_five else R.string.state_timer_one), message = stringResource(if (minute == 5) R.string.figma_warning_five_text else R.string.figma_warning_one_text), primaryLabel = stringResource(R.string.state_warning_continue), onPrimary = { warningMinute = null }, onDismiss = { warningMinute = null }, heroColor = if (minute == 5) InfoContainer else AttentionContainer)
                 }
                 if (showTimeUp) {
-                    AlertDialog(
-                        onDismissRequest = { showTimeUp = false },
-                        title = { Text(text = stringResource(R.string.figma_time_up_title)) },
-                        text = { Text(text = stringResource(R.string.figma_time_up_message)) },
-                        confirmButton = { TextButton(onClick = { showTimeUp = false }) { Text(text = stringResource(R.string.figma_understood)) } }
-                    )
+                    StateDialog(illustration = R.drawable.ic_dialog_hourglass, badge = stringResource(R.string.state_timeup_badge), title = stringResource(R.string.figma_time_up_title), message = stringResource(R.string.figma_time_up_message), primaryLabel = stringResource(R.string.state_timeup_result), onPrimary = { showTimeUp = false; showTest = false; showResult = true }, onDismiss = { showTimeUp = false; showTest = false; showResult = true }, heroColor = AttentionContainer)
                 }
             }
         }
     }
 }
+

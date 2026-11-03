@@ -33,6 +33,7 @@ fun AppButton(
     modifier: Modifier = Modifier,
     style: AppButtonStyle = AppButtonStyle.Primary,
     enabled: Boolean = true,
+    height: androidx.compose.ui.unit.Dp = Dimens.ButtonHeight,
     @DrawableRes trailingIcon: Int? = null
 ) {
     val (containerColor, contentColor) = when (style) {
@@ -43,7 +44,7 @@ fun AppButton(
 
     Button(
         onClick = onClick,
-        modifier = modifier.height(Dimens.ButtonHeight),
+        modifier = modifier.height(height),
         enabled = enabled,
         shape = MaterialTheme.shapes.medium,
         colors = ButtonDefaults.buttonColors(

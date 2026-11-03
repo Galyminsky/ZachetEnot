@@ -6,12 +6,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-private fun TestPreview(answer: AnswerUi, phase: AnswerPhase, taskLabel: String, taskText: String, actionText: String) {
+private fun TestPreview(answer: AnswerUi, phase: AnswerPhase, taskLabel: String, taskText: String, actionText: String, questionNumber: Int = 4) {
     val isEmpty = phase == AnswerPhase.Empty
     val isLocked = phase == AnswerPhase.Locked
     TestScreen(
         state = TestScreenState(
-            header = TestHeaderUi("3 класс · Русский язык", "Состав слова", 4, 15, if (isLocked) 4 else 3, if (isLocked) "16:38" else "16:42"),
+            header = TestHeaderUi("3 класс · Русский язык", "Состав слова", questionNumber, 15, if (isLocked) questionNumber else questionNumber - 1, "20:00"),
             taskLabel = taskLabel,
             taskText = taskText,
             answer = answer,
@@ -48,7 +48,7 @@ private fun ChoiceLockedPreview() = PreviewFrame {
 @Preview(name = "Ввод текста · нет ответа", widthDp = 402, heightDp = 900, showBackground = true)
 @Composable
 private fun TextEmptyPreview() = PreviewFrame {
-    TestPreview(AnswerUi.TextInput("Корень слова", "Введи ответ", "Напиши только корень, без чёрточек.", ""), AnswerPhase.Empty, "Ввод текста", "Запиши корень слова «лесник».", "Ответить")
+    TestPreview(AnswerUi.TextInput("", "Твой ответ...", "Пиши слово без лишних пробелов.", ""), AnswerPhase.Empty, "Ввод текста", "Напиши проверочное слово к слову «трава».", "Подтвердить ответ", questionNumber = 2)
 }
 
 @Preview(name = "Ввод текста · заполнен", widthDp = 402, heightDp = 900, showBackground = true)
@@ -71,7 +71,7 @@ private val MatchingAnswers = listOf("Приставка", "Корень", "Су
 @Preview(name = "Последовательность · нет ответа", widthDp = 402, heightDp = 900, showBackground = true)
 @Composable
 private fun SequenceEmptyPreview() = PreviewFrame {
-    TestPreview(AnswerUi.Sequence("Нажимай на части в нужном порядке", SequenceParts, emptyList(), "Выбрано 0 из 4 частей"), AnswerPhase.Empty, "Последовательность", "Собери слово «подводный» из частей по порядку.", "Проверить")
+    TestPreview(AnswerUi.Sequence("", listOf("в", "играют", "дети", "парке"), emptyList(), ""), AnswerPhase.Empty, "Последовательность", "Составь предложение из слов.", "Подтвердить ответ", questionNumber = 4)
 }
 
 @Preview(name = "Последовательность · заполнен", widthDp = 402, heightDp = 900, showBackground = true)
@@ -89,7 +89,7 @@ private fun SequenceLockedPreview() = PreviewFrame {
 @Preview(name = "Сопоставление · нет ответа", widthDp = 402, heightDp = 900, showBackground = true)
 @Composable
 private fun MatchingEmptyPreview() = PreviewFrame {
-    TestPreview(AnswerUi.Matching("Для каждой части выбери её название", MatchingPrompts, listOf(null, null, null, null)), AnswerPhase.Empty, "Сопоставление", "Сопоставь части слова «подводный» с их названиями.", "Проверить")
+    TestPreview(AnswerUi.Matching("", listOf("книга", "бежать", "красивый"), listOf("глагол", "прилагательное", "существительное")), AnswerPhase.Empty, "Сопоставление", "Соедини слова и части речи.", "Подтвердить ответ", questionNumber = 3)
 }
 
 @Preview(name = "Сопоставление · заполнен", widthDp = 402, heightDp = 900, showBackground = true)

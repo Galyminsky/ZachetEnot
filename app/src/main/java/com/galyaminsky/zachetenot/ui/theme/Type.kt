@@ -15,6 +15,21 @@ val InterFamily = FontFamily(
     Font(R.font.inter_bold, FontWeight.Bold)
 )
 
+val ClassHeadline = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.SemiBold, fontSize = 30.sp, lineHeight = 37.sp)
+val ClassSubtitle = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.Normal, fontSize = 15.sp, lineHeight = 18.sp)
+val ClassNumber = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.Bold, fontSize = 33.sp, lineHeight = 41.sp)
+val ClassHintText = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.Normal, fontSize = 13.sp, lineHeight = 16.sp)
+val ProgressCounter = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.Bold, fontSize = 19.sp, lineHeight = 24.sp)
+val ProgressPercent = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, lineHeight = 20.sp)
+val FutureSubjectTitle = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.SemiBold, fontSize = 19.sp, lineHeight = 24.sp)
+val PrepStatValue = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.Bold, fontSize = 24.sp, lineHeight = 30.sp)
+val TopicTileTitle = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.SemiBold, fontSize = 15.sp, lineHeight = 20.sp)
+val HintSymbol = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.Bold, fontSize = 19.sp, lineHeight = 24.sp)
+val CardSymbol = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.Bold, fontSize = 25.sp, lineHeight = 31.sp)
+val FactSymbol = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.Bold, fontSize = 31.sp, lineHeight = 40.sp)
+val DialogTitle = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.Bold, fontSize = 24.sp, lineHeight = 30.sp)
+val DialogMessage = TextStyle(fontFamily = InterFamily, fontWeight = FontWeight.Normal, fontSize = 14.sp, lineHeight = 20.sp)
+
 private val DefaultTypography = Typography()
 
 private fun TextStyle.withInter() = copy(fontFamily = InterFamily)
@@ -31,24 +46,24 @@ val AppTypography = Typography(
     displaySmall = DefaultTypography.displaySmall.withInter(),
     headlineLarge = TextStyle(
         fontFamily = InterFamily,
-        fontWeight = FontWeight.Bold,
-        fontSize = 32.sp,
-        lineHeight = 36.sp,
-        letterSpacing = (-0.7).sp
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 26.sp,
+        lineHeight = 33.sp,
+        letterSpacing = 0.sp
     ),
     headlineMedium = TextStyle(
         fontFamily = InterFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 28.sp,
-        lineHeight = 34.sp,
-        letterSpacing = (-0.7).sp
+        fontSize = 23.sp,
+        lineHeight = 29.sp,
+        letterSpacing = 0.sp
     ),
     headlineSmall = DefaultTypography.headlineSmall.withInter(),
     titleLarge = TextStyle(
         fontFamily = InterFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 20.sp,
-        lineHeight = 26.sp,
+        fontSize = 17.sp,
+        lineHeight = 21.sp,
         letterSpacing = 0.sp
     ),
     titleMedium = DefaultTypography.titleMedium.withInter(),
@@ -62,8 +77,8 @@ val AppTypography = Typography(
     bodyLarge = TextStyle(
         fontFamily = InterFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
+        fontSize = 14.sp,
+        lineHeight = 18.sp,
         letterSpacing = 0.sp
     ),
     bodyMedium = DefaultTypography.bodyMedium.withInter(),
@@ -92,7 +107,7 @@ val AppTypography = Typography(
         fontFamily = InterFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 11.sp,
-        lineHeight = 13.sp,
+        lineHeight = 14.sp,
         letterSpacing = 0.sp
     )
 )

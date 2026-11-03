@@ -54,6 +54,7 @@ private fun ResultFailedPreview() {
                     title = "Тест завершён",
                     subtitle = "Состав слова",
                     passed = false,
+                    failedNote = "12 из 15 · Для успеха нужно 14 правильных ответов.",
                     verdictTitle = "Попробуй ещё раз",
                     verdictNote = "Пока не пройдено",
                     correctText = "12 из 15",
