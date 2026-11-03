@@ -1442,3 +1442,16 @@ Fix render issues in the Compose Preview (NoSuchFieldError: Class com.galyaminsk
 - **Проверка агента:** `:app:testDebugUnitTest --offline` через локальный Gradle 9.6 — 72 пройдено, 0 упало; APK, commit и push не выполнялись.
 - **Приёмка:** ожидает.
 
+### З-41 — аудит UI-ресурсов (2026-11-03)
+- **Команда:**
+```text
+Шаг 08. Проведи аудит ресурсов во всех production Kotlin-файлах и res/. Проверь Color.kt, Dimens.kt, Type.kt, Shape.kt, Theme.kt, strings.xml: дубли, конфликты, несогласованность; UI-хардкод; неиспользуемые ресурсы с учётом XML, Manifest, Preview и косвенных ссылок. Исправь подтверждённый UI-хардкод через существующие ресурсы, не меняя дизайн; не удаляй неподтверждённые ресурсы. Без массового рефакторинга, новых файлов, зависимостей и изменений domain/data/навигации/дизайна. Запусти :app:testDebugUnitTest и :app:assembleDebug, при ошибках исправь и повтори. Обнови PROJECT_LOG.md; commit/push не выполняй. Отчёт: изменённые файлы, оставшийся хардкод, кандидаты на удаление, результат тестов и сборки.
+```
+- **Сделано:** Просмотрены палитра, размеры, типографика, формы, тема, strings.xml и ссылки в production Kotlin, XML, Manifest и Preview. Совпадающие тексты с разными ролями сохранены; цветовые литералы вне палитры и русские литералы в production-компонентах не обнаружены.
+  В AppButton, BackButton, ChoiceOption и TopicCard прямые значения отступов/размеров/контура заменены существующими Dimens с теми же численными значениями; внешний вид не менялся.
+  После точечных правок остаётся 90 прямых dp/sp в 43 production UI-файлах без Preview; среди них размеры компонентов, иконок и локальные типографические настройки. Массовая замена в этом шаге не проводилась.
+  Без прямых ссылок найдены 35 строк в strings.xml, семь шаблонных цветов в colors.xml, SwitchTrackOff и Dimens.Space5/Space32/TopicTileHeight. Использование косвенно или через будущие состояния не исключено; ресурсы не удалялись. Шрифты, drawable и иконки имеют найденные ссылки в Kotlin/XML/Preview.
+- **Файлы:** изменены `ui/components/AppButton.kt`, `ui/components/BackButton.kt`, `ui/components/ChoiceOption.kt`, `ui/components/TopicCard.kt`, `PROJECT_LOG.md`.
+- **Проверка агента:** `:app:testDebugUnitTest :app:assembleDebug --offline` — 72 теста прошли, 0 упало; debug-сборка успешна. `git diff --check` без ошибок; commit/push не выполнялись.
+- **Приёмка:** ожидает.
+

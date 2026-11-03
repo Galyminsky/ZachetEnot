@@ -15,14 +15,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.galyaminsky.zachetenot.R
 import com.galyaminsky.zachetenot.ui.theme.Primary
+import com.galyaminsky.zachetenot.ui.theme.Dimens
 
 @Composable
 fun BackButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Row(modifier = modifier.heightIn(min = 48.dp).clickable(role = Role.Button, onClick = onClick), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-        Icon(painter = painterResource(R.drawable.ic_arrow_left), contentDescription = null, modifier = Modifier.size(20.dp), tint = Primary)
+    Row(modifier = modifier.heightIn(min = Dimens.MinTouchTarget).clickable(role = Role.Button, onClick = onClick), horizontalArrangement = Arrangement.spacedBy(Dimens.Space8), verticalAlignment = Alignment.CenterVertically) {
+        Icon(painter = painterResource(R.drawable.ic_arrow_left), contentDescription = null, modifier = Modifier.size(Dimens.Space20), tint = Primary)
         Text(text = stringResource(R.string.back), style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.SemiBold), color = Primary)
     }
 }

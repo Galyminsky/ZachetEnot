@@ -32,16 +32,16 @@ import com.galyaminsky.zachetenot.ui.theme.TextPrimary
 
 @Composable
 fun ChoiceOption(text: String, selected: Boolean, locked: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Row(modifier.fillMaxWidth().height(56.dp).clip(MaterialTheme.shapes.medium).background(if (selected) Selected else Surface).border(if (selected) Dimens.BorderWidthSelected else Dimens.BorderWidth, if (selected) Primary else Border, MaterialTheme.shapes.medium).selectable(selected = selected, enabled = !locked, role = Role.RadioButton, onClick = onClick).padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+    Row(modifier.fillMaxWidth().height(56.dp).clip(MaterialTheme.shapes.medium).background(if (selected) Selected else Surface).border(if (selected) Dimens.BorderWidthSelected else Dimens.BorderWidth, if (selected) Primary else Border, MaterialTheme.shapes.medium).selectable(selected = selected, enabled = !locked, role = Role.RadioButton, onClick = onClick).padding(horizontal = Dimens.Space16), horizontalArrangement = Arrangement.spacedBy(Dimens.Space12), verticalAlignment = Alignment.CenterVertically) {
         RadioMark(selected)
         Text(text = text, style = MaterialTheme.typography.bodyLarge, color = TextPrimary, modifier = Modifier.weight(1f))
-        if (locked && selected) Icon(painter = painterResource(R.drawable.ic_lock), contentDescription = null, modifier = Modifier.size(18.dp), tint = Primary)
+        if (locked && selected) Icon(painter = painterResource(R.drawable.ic_lock), contentDescription = null, modifier = Modifier.size(Dimens.Space18), tint = Primary)
     }
 }
 
 @Composable
 private fun RadioMark(selected: Boolean) {
-    Box(Modifier.size(24.dp).clip(CapsuleShape).border(2.dp, if (selected) Primary else Border, CapsuleShape), contentAlignment = Alignment.Center) {
-        if (selected) Box(Modifier.size(12.dp).clip(CapsuleShape).background(Primary))
+    Box(Modifier.size(Dimens.Space24).clip(CapsuleShape).border(Dimens.BorderWidthSelected, if (selected) Primary else Border, CapsuleShape), contentAlignment = Alignment.Center) {
+        if (selected) Box(Modifier.size(Dimens.Space12).clip(CapsuleShape).background(Primary))
     }
 }

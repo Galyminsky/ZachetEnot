@@ -68,8 +68,8 @@ fun TopicCard(
             .background(backgroundColor)
             .border(borderWidth, borderColor, MaterialTheme.shapes.large)
             .clickable(enabled = status != TopicStatus.LOCKED, role = Role.Button, onClick = onClick)
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+            .padding(Dimens.Space16),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.Space12),
         verticalAlignment = Alignment.Top
     ) {
         Box(
@@ -105,7 +105,7 @@ fun TopicCard(
                     Icon(
                         painter = painterResource(R.drawable.ic_arrow_right),
                         contentDescription = null,
-                        modifier = Modifier.size(20.dp),
+                modifier = Modifier.size(Dimens.Space20),
                         tint = if (status == TopicStatus.AVAILABLE) Primary else TextSecondary
                     )
                 }

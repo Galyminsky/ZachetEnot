@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import com.galyaminsky.zachetenot.ui.theme.Disabled
 import com.galyaminsky.zachetenot.ui.theme.Dimens
 import com.galyaminsky.zachetenot.ui.theme.Primary
@@ -53,11 +52,11 @@ fun AppButton(
             disabledContainerColor = Disabled,
             disabledContentColor = TextDisabled
         ),
-        contentPadding = PaddingValues(horizontal = 20.dp),
+        contentPadding = PaddingValues(horizontal = Dimens.Space20),
         elevation = null
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.Space12),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = text, style = MaterialTheme.typography.labelLarge)
@@ -65,7 +64,7 @@ fun AppButton(
                 Icon(
                     painter = painterResource(it),
                     contentDescription = null,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(Dimens.Space20)
                 )
             }
         }
