@@ -14,3 +14,4 @@ val AppShapes = Shapes(
 )
 
 val CapsuleShape = RoundedCornerShape(percent = 50)
+val CardShape20 = RoundedCornerShape(20.dp)

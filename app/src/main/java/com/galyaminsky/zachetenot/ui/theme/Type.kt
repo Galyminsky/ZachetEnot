@@ -78,7 +78,7 @@ val AppTypography = Typography(
         fontFamily = InterFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
-        lineHeight = 19.sp,
+        lineHeight = 20.sp,
         letterSpacing = 0.sp
     ),
     labelMedium = TextStyle(

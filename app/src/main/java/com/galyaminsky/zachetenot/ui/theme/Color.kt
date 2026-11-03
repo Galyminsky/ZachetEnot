@@ -32,3 +32,7 @@ val SelectedStrong = Color(0xFFE1DEFF)
 val SwitchTrackOff = Color(0xFFD9DDE8)
 // Макет: приглушённый текст на фоне Primary.
 val OnPrimaryMuted = Color(0xFFDEDCFF)
+val InfoContainer = Color(0xFFEAF3FF)
+val AttentionContainer = Color(0xFFFFF0DF)
+val PositiveInfoContainer = Color(0xFFE7F7EE)
+val DangerContainer = Color(0xFFFFF0EE)

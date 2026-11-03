@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.galyaminsky.zachetenot.ui.theme.Disabled
+import com.galyaminsky.zachetenot.ui.theme.Dimens
 import com.galyaminsky.zachetenot.ui.theme.Primary
 import com.galyaminsky.zachetenot.ui.theme.Selected
 import com.galyaminsky.zachetenot.ui.theme.Surface
@@ -42,7 +43,7 @@ fun AppButton(
 
     Button(
         onClick = onClick,
-        modifier = modifier.height(56.dp),
+        modifier = modifier.height(Dimens.ButtonHeight),
         enabled = enabled,
         shape = MaterialTheme.shapes.medium,
         colors = ButtonDefaults.buttonColors(

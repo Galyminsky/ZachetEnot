@@ -28,7 +28,7 @@ import com.galyaminsky.zachetenot.ui.theme.TextSecondary
 import com.galyaminsky.zachetenot.ui.theme.TextPrimary
 
 @Composable
-fun ResultScreen(state: ResultUiState, onReview: () -> Unit, onRetry: () -> Unit, onList: () -> Unit, modifier: Modifier = Modifier) {
+fun ResultScreen(state: ResultUiState, onReview: () -> Unit, onRetry: () -> Unit, onList: () -> Unit, modifier: Modifier = Modifier, reviewAvailable: Boolean = true) {
     Column(
         modifier.fillMaxSize().background(Background).verticalScroll(rememberScrollState())
             .padding(start = 24.dp, end = 24.dp, top = 8.dp, bottom = 12.dp)
@@ -62,8 +62,10 @@ fun ResultScreen(state: ResultUiState, onReview: () -> Unit, onRetry: () -> Unit
         Spacer(Modifier.height(24.dp))
         Text(text = state.message, style = MaterialTheme.typography.bodyLarge, color = TextSecondary)
         Spacer(Modifier.height(24.dp))
-        AppButton(text = state.reviewButton, onClick = onReview, modifier = Modifier.fillMaxWidth(), style = AppButtonStyle.Primary, trailingIcon = R.drawable.ic_arrow_right)
-        Spacer(Modifier.height(12.dp))
+        if (reviewAvailable) {
+            AppButton(text = state.reviewButton, onClick = onReview, modifier = Modifier.fillMaxWidth(), style = AppButtonStyle.Primary, trailingIcon = R.drawable.ic_arrow_right)
+            Spacer(Modifier.height(12.dp))
+        }
         AppButton(text = state.retryButton, onClick = onRetry, modifier = Modifier.fillMaxWidth(), style = AppButtonStyle.Secondary)
         Spacer(Modifier.height(12.dp))
         AppButton(text = state.listButton, onClick = onList, modifier = Modifier.fillMaxWidth(), style = AppButtonStyle.Text)

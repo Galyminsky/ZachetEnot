@@ -7,9 +7,11 @@ object Dimens {
     val Space8 = 8.dp
     val Space12 = 12.dp
     val Space16 = 16.dp
+    val Space20 = 20.dp
     val Space24 = 24.dp
     val Space32 = 32.dp
     val Space48 = 48.dp
+    val ButtonHeight = 58.dp
     val ScreenHorizontalPadding = 24.dp
     val MinTouchTarget = 48.dp
     val BorderWidth = 1.dp
