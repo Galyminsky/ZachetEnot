@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -20,6 +21,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.galyaminsky.zachetenot.domain.catalog.AppCatalog
 import com.galyaminsky.zachetenot.data.AssetContentRepository
 import com.galyaminsky.zachetenot.data.DataStoreProgressRepository
@@ -30,6 +34,7 @@ import com.galyaminsky.zachetenot.domain.model.TestResult
 import com.galyaminsky.zachetenot.domain.test.TestEngine
 import com.galyaminsky.zachetenot.domain.test.TestSession
 import com.galyaminsky.zachetenot.domain.test.TestTimer
+import com.galyaminsky.zachetenot.domain.test.BackgroundGuard
 import com.galyaminsky.zachetenot.data.SystemTimeSource
 import com.galyaminsky.zachetenot.domain.progress.ProgressCalculator
 import com.galyaminsky.zachetenot.domain.progress.TopicStatus
@@ -67,6 +72,7 @@ import com.galyaminsky.zachetenot.ui.theme.AttentionContainer
 import com.galyaminsky.zachetenot.ui.theme.DangerContainer
 import com.galyaminsky.zachetenot.ui.theme.ZachetEnotTheme
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -82,7 +88,7 @@ class MainActivity : ComponentActivity() {
                 var showSettings by rememberSaveable { mutableStateOf(false) }
                 var showTopics by rememberSaveable { mutableStateOf(false) }
                 var showPrep by rememberSaveable { mutableStateOf(false) }
-                var showTest by rememberSaveable { mutableStateOf(false) }
+                var showTest by remember { mutableStateOf(false) }
                 var showResult by rememberSaveable { mutableStateOf(false) }
                 var showReview by rememberSaveable { mutableStateOf(false) }
                 var showNoContent by rememberSaveable { mutableStateOf(false) }
@@ -91,6 +97,7 @@ class MainActivity : ComponentActivity() {
                 var showExitConfirmation by remember { mutableStateOf(false) }
                 var showResetConfirmation by remember { mutableStateOf(false) }
                 var showTimeUp by remember { mutableStateOf(false) }
+                var showBackgroundFailure by remember { mutableStateOf(false) }
                 var warningMinute by remember { mutableStateOf<Int?>(null) }
                 var selectedTopicId by rememberSaveable { mutableStateOf<String?>(null) }
                 var session by remember { mutableStateOf<TestSession?>(null) }
@@ -99,17 +106,59 @@ class MainActivity : ComponentActivity() {
                 var answerPhase by remember { mutableStateOf(AnswerPhase.Empty) }
                 var remainingMs by remember { mutableStateOf(TestConfig.TIME_LIMIT_MINUTES * 60_000L) }
                 var result by remember { mutableStateOf<TestResult?>(null) }
+                var contentLoadFailed by remember { mutableStateOf(false) }
+                var isForeground by remember { mutableStateOf(true) }
+                val lifecycleOwner = LocalLifecycleOwner.current
+                val backgroundGuard = remember(session) { BackgroundGuard(SystemTimeSource()) }
+                DisposableEffect(lifecycleOwner, showTest, session) {
+                    val observer = LifecycleEventObserver { _, event ->
+                        if (showTest && session?.isFinished == false) {
+                            when (event) {
+                                Lifecycle.Event.ON_STOP -> {
+                                    isForeground = false
+                                    backgroundGuard.onBackground()
+                                }
+                                Lifecycle.Event.ON_START -> {
+                                    if (backgroundGuard.onForeground()) {
+                                        session = null
+                                        timer = null
+                                        result = null
+                                        reviewMistakes = emptyList()
+                                        selectedOptionIndex = null
+                                        answerPhase = AnswerPhase.Empty
+                                        warningMinute = null
+                                        showExitConfirmation = false
+                                        showTimeUp = false
+                                        showTest = false
+                                        showTopics = true
+                                        showBackgroundFailure = true
+                                    }
+                                    isForeground = true
+                                }
+                                else -> Unit
+                            }
+                        }
+                    }
+                    lifecycleOwner.lifecycle.addObserver(observer)
+                    onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+                }
                 val coroutineScope = rememberCoroutineScope()
                 var soundEnabled by rememberSaveable { mutableStateOf(true) }
                 var selectedSubjectId by rememberSaveable { mutableStateOf(AppCatalog.DEFAULT_SUBJECT_ID) }
                 val progressRepository = remember { DataStoreProgressRepository(progressDataStore) }
                 val passedIds by progressRepository.passedTopicIds.collectAsState(initial = emptySet())
                 val content by produceState<ContentBundle?>(initialValue = null) {
-                    value = AssetContentRepository(this@MainActivity).loadContent()
+                    try {
+                        value = AssetContentRepository(this@MainActivity).loadContent()
+                    } catch (exception: CancellationException) {
+                        throw exception
+                    } catch (exception: Exception) {
+                        contentLoadFailed = true
+                    }
                 }
                 val subjectProgress = ProgressCalculator.calculate(content?.topics.orEmpty(), passedIds)
-                LaunchedEffect(showTest, timer) {
-                    while (showTest && timer != null) {
+                LaunchedEffect(showTest, timer, isForeground) {
+                    while (showTest && timer != null && isForeground) {
                         remainingMs = timer!!.remainingMs()
                         if (timer!!.isExpired()) {
                             result = session?.finish()
@@ -124,7 +173,9 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    if (showReview && result != null) {
+                    if (contentLoadFailed || content?.questions?.isEmpty() == true) {
+                        StatusScreen(kind = StatusKind.NoContent, onBack = { finish() }, modifier = Modifier.padding(innerPadding))
+                    } else if (showReview && result != null) {
                         val currentResult = result!!
                         ReviewScreen(
                             state = ReviewUiState(
@@ -400,6 +451,9 @@ class MainActivity : ComponentActivity() {
                 }
                 if (showTimeUp) {
                     StateDialog(illustration = R.drawable.ic_dialog_hourglass, badge = stringResource(R.string.state_timeup_badge), title = stringResource(R.string.figma_time_up_title), message = stringResource(R.string.figma_time_up_message), primaryLabel = stringResource(R.string.state_timeup_result), onPrimary = { showTimeUp = false; showTest = false; showResult = true }, onDismiss = { showTimeUp = false; showTest = false; showResult = true }, heroColor = AttentionContainer)
+                }
+                if (showBackgroundFailure) {
+                    StateDialog(illustration = R.drawable.ic_dialog_hourglass, badge = stringResource(R.string.state_timeup_badge), title = stringResource(R.string.test_background_failed_title), message = stringResource(R.string.test_background_failed_message), primaryLabel = stringResource(R.string.figma_result_topics), onPrimary = { showBackgroundFailure = false }, onDismiss = { showBackgroundFailure = false }, heroColor = AttentionContainer)
                 }
             }
         }

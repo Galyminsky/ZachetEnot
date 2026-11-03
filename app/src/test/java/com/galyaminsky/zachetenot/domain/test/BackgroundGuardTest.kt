@@ -55,4 +55,17 @@ class BackgroundGuardTest {
         assertTrue(guard.onForeground())
         assertFalse(guard.onForeground())
     }
+
+    @Test
+    fun `repeated background event keeps the first departure time`() {
+        val timeSource = FakeTimeSource()
+        val guard = BackgroundGuard(timeSource)
+        guard.onBackground()
+        timeSource.advanceBy(40_000L)
+        guard.onBackground()
+        timeSource.advanceBy(21_000L)
+
+        assertTrue(guard.onForeground())
+        assertFalse(guard.onForeground())
+    }
 }

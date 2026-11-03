@@ -1,6 +1,7 @@
 ﻿package com.galyaminsky.zachetenot.domain.progress
 
 import com.galyaminsky.zachetenot.domain.model.Topic
+import com.galyaminsky.zachetenot.domain.model.TestResult
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -28,6 +29,28 @@ class ProgressCalculatorTest {
         assertEquals(
             listOf(TopicStatus.PASSED, TopicStatus.AVAILABLE, TopicStatus.LOCKED),
             result.topics.map { it.status }
+        )
+    }
+
+    @Test
+    fun `passing the second topic unlocks the third`() {
+        val result = ProgressCalculator.calculate(topics, setOf("topic-1", "topic-2"))
+
+        assertEquals(
+            listOf(TopicStatus.PASSED, TopicStatus.PASSED, TopicStatus.AVAILABLE),
+            result.topics.map { it.status }
+        )
+    }
+
+    @Test
+    fun `failed repeat does not close an already passed topic`() {
+        val failedRepeat = TestResult(totalCount = 15, correctCount = 13, mistakesByRule = emptyMap())
+        val passedTopicIds = setOf("topic-1")
+
+        assertEquals(false, failedRepeat.passed)
+        assertEquals(
+            listOf(TopicStatus.PASSED, TopicStatus.AVAILABLE, TopicStatus.LOCKED),
+            ProgressCalculator.calculate(topics, passedTopicIds).topics.map { it.status }
         )
     }
 

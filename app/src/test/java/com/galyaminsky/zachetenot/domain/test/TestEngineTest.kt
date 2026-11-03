@@ -32,6 +32,38 @@ class TestEngineTest {
     }
 
     @Test
+    fun `startSession selects fifteen unique IDs from a bank containing duplicates`() {
+        val bank = questionBank(16)
+        val session = TestEngine(Random(7)).startSession(bank + bank.take(10))
+
+        assertEquals(15, session.questions.size)
+        assertEquals(15, session.questions.map { it.id }.toSet().size)
+    }
+
+    @Test
+    fun `startSession rejects a bank with fewer than fifteen unique IDs`() {
+        val bank = questionBank(14)
+
+        assertThrows(IllegalArgumentException::class.java) {
+            TestEngine(Random(7)).startSession(bank + bank.take(5))
+        }
+    }
+
+    @Test
+    fun `startSession allows another attempt after a completed attempt`() {
+        val engine = TestEngine(Random(7))
+        val bank = questionBank(20)
+        val firstAttempt = engine.startSession(bank)
+        collectQuestions(firstAttempt)
+        firstAttempt.finish()
+
+        val nextAttempt = engine.startSession(bank)
+
+        assertEquals(15, nextAttempt.questions.size)
+        assertEquals(0, nextAttempt.currentIndex)
+    }
+
+    @Test
     fun `same random seed produces the same question order`() {
         val bank = questionBank(20)
         val firstOrder = collectQuestions(TestEngine(Random(1234)).startSession(bank)).map { it.id }

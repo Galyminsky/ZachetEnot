@@ -24,6 +24,9 @@ class TestSession(val questions: List<Question>) {
 
     init {
         require(questions.isNotEmpty()) { "A test session must contain at least one question" }
+        require(questions.map { it.id }.toSet().size == questions.size) {
+            "Question IDs must be unique within a test session"
+        }
     }
 
     fun submitAnswer(optionId: String): Boolean {

@@ -28,6 +28,8 @@ object ContentParser {
 
         val topicIds = topics.map { it.id }.toSet()
         val ruleIds = rules.map { it.id }.toSet()
+        require(topicIds.size == topics.size) { "Topic IDs must be unique" }
+        require(ruleIds.size == rules.size) { "Rule IDs must be unique" }
         require(questions.map { it.id }.toSet().size == questions.size) {
             "Question IDs must be unique"
         }

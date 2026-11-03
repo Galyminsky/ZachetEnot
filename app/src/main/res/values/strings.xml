@@ -220,6 +220,8 @@
     <string name="figma_warning_one_text">Времени почти не осталось.</string>
     <string name="figma_time_up_title">Время вышло</string>
     <string name="figma_time_up_message">Неотвеченные вопросы учитываются как ошибки.</string>
+    <string name="test_background_failed_title">Тест не пройден</string>
+    <string name="test_background_failed_message">Вы были вне приложения больше 60 секунд. Попытка сброшена.</string>
     <string name="figma_understood">Понятно</string>
     <string name="state_confirm_badge">ПОДТВЕРЖДЕНИЕ</string>
     <string name="state_exit_continue">Продолжить тест</string>

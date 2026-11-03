@@ -53,6 +53,20 @@ class TestTimerTest {
     }
 
     @Test
+    fun `deadline does not emit a late warning`() {
+        val timeSource = FakeTimeSource()
+        val timer = TestTimer(timeSource)
+        timer.start()
+        timeSource.advanceBy(20 * 60_000L - 1L)
+        assertFalse(timer.isExpired())
+        timeSource.advanceBy(1L)
+
+        assertTrue(timer.isExpired())
+        assertNull(timer.consumeWarning())
+        assertNull(timer.consumeWarning())
+    }
+
+    @Test
     fun `five-minute warning is not emitted one second early`() {
         val timeSource = FakeTimeSource()
         val timer = TestTimer(timeSource)
@@ -72,7 +86,9 @@ class TestTimerTest {
         assertEquals(5, timer.consumeWarning())
         assertNull(timer.consumeWarning())
 
-        timeSource.advanceBy(4 * 60_000L)
+        timeSource.advanceBy(4 * 60_000L - 1_000L)
+        assertNull(timer.consumeWarning())
+        timeSource.advanceBy(1_000L)
 
         assertEquals(1, timer.consumeWarning())
         assertNull(timer.consumeWarning())

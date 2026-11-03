@@ -24,6 +24,7 @@ class TestTimer(
 
     fun consumeWarning(): Int? {
         val remaining = remainingMs()
+        if (remaining == 0L) return null
         val reachedWarnings = TestConfig.WARNING_MINUTES.filter { minutes ->
             minutes !in emittedWarnings && remaining <= minutes * 60_000L
         }

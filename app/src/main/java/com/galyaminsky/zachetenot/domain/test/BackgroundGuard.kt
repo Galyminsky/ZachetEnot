@@ -9,7 +9,7 @@ class BackgroundGuard(
     private var backgroundAtMs: Long? = null
 
     fun onBackground() {
-        backgroundAtMs = timeSource.nowMs()
+        if (backgroundAtMs == null) backgroundAtMs = timeSource.nowMs()
     }
 
     fun onForeground(): Boolean {

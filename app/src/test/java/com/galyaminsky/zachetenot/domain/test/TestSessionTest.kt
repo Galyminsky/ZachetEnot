@@ -10,6 +10,15 @@ import org.junit.Test
 
 class TestSessionTest {
     @Test
+    fun `session rejects duplicate question IDs`() {
+        val question = questionBank(1).single()
+
+        assertThrows(IllegalArgumentException::class.java) {
+            TestSession(listOf(question, question))
+        }
+    }
+
+    @Test
     fun `submitAnswer returns true for correct and false for incorrect answers`() {
         val correctSession = TestSession(questionBank(1))
         assertTrue(correctSession.submitAnswer("correct-0"))

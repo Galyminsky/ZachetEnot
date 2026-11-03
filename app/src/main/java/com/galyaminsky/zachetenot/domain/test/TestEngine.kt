@@ -6,11 +6,12 @@ import kotlin.random.Random
 
 class TestEngine(private val random: Random = Random.Default) {
     fun startSession(bank: List<Question>): TestSession {
-        require(bank.size >= TestConfig.QUESTIONS_PER_TEST) {
-            "Question bank must contain at least ${TestConfig.QUESTIONS_PER_TEST} questions"
+        val uniqueQuestions = bank.distinctBy { it.id }
+        require(uniqueQuestions.size >= TestConfig.QUESTIONS_PER_TEST) {
+            "Question bank must contain at least ${TestConfig.QUESTIONS_PER_TEST} unique questions"
         }
 
-        val selectedQuestions = bank.shuffled(random)
+        val selectedQuestions = uniqueQuestions.shuffled(random)
             .take(TestConfig.QUESTIONS_PER_TEST)
             .map { question -> question.copy(options = question.options.shuffled(random)) }
 
